@@ -1,5 +1,5 @@
 const config = require('config');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 const vehicleRouteSchema = new mongoose.Schema({
