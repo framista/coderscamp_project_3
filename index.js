@@ -3,7 +3,11 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const express = require('express');
 const app = express();
-//Dalej np. const vehicles = require('./routes/vehicles');
+
+const auth = require('./routes/auth');
+const vehicles = require('./routes/vehicles');
+const users = require('./routes/users');
+const vehicleRoutes = require('./routes/vehicleRoutes');
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
@@ -15,8 +19,9 @@ mongoose.connect('mongodb://localhost/vehiclefleet')
     .catch(err => console.error('Could not connect to MongoDB',err));
 
 app.use(express.json());
-// Dalej np. app.use('/api/vehicles', vehicles);
-
+app.use('/api/vehicles', vehicles);
+app.use('/api/vehicleRoutes', vehicleRoutes);
+app.use('/api/users', users);
 
 async function createAdmin(){
     const user = new User({
