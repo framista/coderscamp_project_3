@@ -1,3 +1,5 @@
+const admin = require('../middleware/admin')
+const auth = require('../middleware/auth')
 const {Vehicle} = require('../models/vehicle')
 const express = require('express');
 const router = express.Router();
@@ -17,7 +19,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
+
     const vehicle = new Vehicle({
         number: req.body.number,
         type: req.body.type,
@@ -35,7 +38,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     try {
         const vehicle = await Vehicle.findByIdAndRemove(req.params.id);
         if (!vehicle) return res.status(404).send('The vehicle was not found 😲 \n I cannot delete it 😒');
