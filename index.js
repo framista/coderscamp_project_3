@@ -1,45 +1,22 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const express = require('express');
+const app = express();
+//Dalej np. const vehicles = require('./routes/vehicles');
+
+if (!config.get('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+    process.exit(1);
+}
+
 mongoose.connect('mongodb://localhost/vehiclefleet')
     .then(() => console.log('Connected to MongoDC...'))
     .catch(err => console.error('Could not connect to MongoDB',err));
 
-const userSchema = new mongoose.Schema({
-    name: {type: String, required: true },
-    surname: {type: String, required: true },
-    password: {type: String, required: true },
-    email: {type: String, required: true },
-    phone: Number,
-    isAdmin: {type: Boolean, default: false },
-    lastActiveAt: {type: Date, default: Date.now}
-});
+app.use(express.json());
+// Dalej np. app.use('/api/vehicles', vehicles);
 
-const vehicleSchema = new mongoose.Schema({
-    number: {type: Number, required: true },    // some serial number
-    type: {type: String, required: true, 
-        enum: ['Micro', 'Sedan', 'CUV', 'SUV', 'Coupe', 'Hatchback', 'Pickup',
-             'VAN', 'Campervan', 'Mini Truck', 'Minivan', 'Truck', 'Big Truck', 'Bus'] },   
-    brand: {type: String, required: true }, // like BMW
-    plate: {type: String, required: true },
-    productionYear: {type: Date, required: true},
-    isAvaliable: {type: Boolean, default: true },
-    fuelType: {type: String, required: true, enum:['Gasoline', 'Diesel'] },
-    routes: String
-});
-const User = mongoose.model('User', userSchema);
-const Vehicle = mongoose.model('Vehicle', vehicleSchema);
-
-const routeSchema = new mongoose.Schema({
-    vehicle: {type: String, required: true },
-    driver: {type: String, required: true },
-    starting: {type: String, required: true },
-    destination: {type: String, required: true },
-    km: {type: Number, required: true },
-    fuel: {type: Number, required: true },
-    comments: String
-});
-
-
-const Route = mongoose.model('Route', routeSchema);
 
 async function createAdmin(){
     const user = new User({
@@ -75,8 +52,9 @@ async function createTestVehicle(){
         console.log(ex.message);
     }
 }
+
 async function createTestRoute(){
-    const route = new Route({
+    const route = new VehicleRoute({
         vehicle: 'DW123',
         driver: 'Admin',
         starting: 'Wrocław',
@@ -95,6 +73,6 @@ async function createTestRoute(){
 
 createAdmin();
 createTestVehicle();
-createTestRoute();
+createTestVehicleRoute();
 
 
