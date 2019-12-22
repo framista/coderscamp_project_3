@@ -15,7 +15,7 @@ if (!config.get('jwtPrivateKey')) {
     process.exit(1);
 }
 
-mongoose.connect('mongodb://localhost/vehiclefleet')
+mongoose.connect('mongodb+srv://dbUser:dbUserPassword@cluster0-b6aon.mongodb.net/test?retryWrites=true&w=majority')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB',err));
 
