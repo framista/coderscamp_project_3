@@ -1,8 +1,11 @@
 const admin = require('../middleware/admin')
 const auth = require('../middleware/auth')
-const {Vehicle} = require('../models/vehicle')
+const { Vehicle } = require('../models/vehicle')
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser')
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/', async (req, res) => {
     const vehicles = await Vehicle.find().sort('type');
@@ -19,8 +22,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', auth, async (req, res) => {
-
+// router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
     const vehicle = new Vehicle({
         number: req.body.number,
         type: req.body.type,
@@ -30,15 +33,16 @@ router.post('/', auth, async (req, res) => {
         fuelType: req.body.fuelType,
         isAvailable: req.body.isAvailable
     });
-    try{
+    try {
         let response = await vehicle.save();
         res.send(response);
-    }catch(err){
+    } catch (err) {
         res.send(err.message);
     }
 });
 
-router.delete('/:id', [auth, admin], async (req, res) => {
+// router.delete('/:id', [auth, admin], async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const vehicle = await Vehicle.findByIdAndRemove(req.params.id);
         if (!vehicle) return res.status(404).send('The vehicle was not found 😲 \n I cannot delete it 😒');
@@ -47,5 +51,25 @@ router.delete('/:id', [auth, admin], async (req, res) => {
         return res.status(404).send('The vehicle was not found 😲 \n I cannot delete it 😒 Not correct ID');
     }
 });
+
+router.put('/:id', bodyParser.json(), async (req, res, next) => {
+    try {
+        const vehicle = await Vehicle.findByIdAndUpdate(req.params.id,
+            {
+                number: req.body.number,
+                type: req.body.type,
+                brand: req.body.brand,
+                plate: req.body.plate,
+                productionYear: req.body.productionYear,
+                fuelType: req.body.fuelType,
+                isAvailable: req.body.isAvailable
+            }, { new: true });
+        if (!vehicle) return res.status(404).send('The vehicle was not found 😲');
+        res.send(vehicle);
+    } catch (err) {
+        return res.status(404).send('The vehicle was not found 😲 Not correct ID');
+    }
+})
+
 
 module.exports = router;

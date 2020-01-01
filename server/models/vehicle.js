@@ -1,5 +1,4 @@
 const config = require('config');
-// const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 const vehicleSchema = new mongoose.Schema({
@@ -11,7 +10,7 @@ const vehicleSchema = new mongoose.Schema({
     },
     brand: { type: String, required: true }, // like BMW
     plate: { type: String, required: true },
-    productionYear: { type: Date, required: true },
+    productionYear: { type: Number, required: true },
     isAvailable: { type: Boolean, default: true },
     fuelType: { type: String, required: true, enum: ['Gasoline', 'Diesel'] },
     vehicleRoutes: String
