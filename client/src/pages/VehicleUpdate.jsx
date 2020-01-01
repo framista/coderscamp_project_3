@@ -27,8 +27,8 @@ class VehicleUpdate extends Component {
 
     render() {
         return (
-            <div className="ml-3">
-                <h1 className="mt-5">Edit vehicle</h1> <br />
+            <div style={{marginLeft: "100px"}}>
+                <h1 style={{paddingTop: "30px"}}>Edit vehicle</h1> <br />
                 {this.state.fetched
                     ? <Formik
                         initialValues={{
@@ -45,6 +45,9 @@ class VehicleUpdate extends Component {
                             if (! /^\d+$/.test(values.number)) {
                                 errors.number = 'Only digit can be used'
                             }
+                            if(values.productionYear < 1980 || values.productionYear > new Date().getFullYear()){
+                                errors.productionYear = "Not correct production year"
+                            }
                             if (! /^\d+$/.test(values.productionYear)) {
                                 errors.productionYear = 'Only digit can be used'
                             }
@@ -52,6 +55,7 @@ class VehicleUpdate extends Component {
                         }}
                         onSubmit={(values) => {
                             api.updateVehicleById(this.state.id, values)
+                            window.alert('Vehicle updated successfully')
                         }}
                         render={({
                             values,
@@ -104,7 +108,6 @@ class VehicleUpdate extends Component {
                                             name='productionYear'
                                             type='number'
                                             min="1980"
-                                            max="2020"
                                             step="1"
                                             onChange={handleChange}
                                             value={values.productionYear}

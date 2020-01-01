@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap'
 
 const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
-    margin-top: 40px;
+    margin-left: 70px
 `
 
 const Update = styled.div`
@@ -142,7 +142,7 @@ class VehicleList extends Component {
 
         return (
             <Wrapper>
-                <h1>Vehicles</h1>
+                <h1 style={{paddingTop: "30px"}}>Vehicles</h1>
                 {showTable && (
                     <ReactTable
                         data={vehicles}

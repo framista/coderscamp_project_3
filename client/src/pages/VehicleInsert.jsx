@@ -12,8 +12,8 @@ class VehicleInsert extends Component {
 
     render() {
         return (
-            <div className="ml-3">
-                <h1 className="mt-5">Create new vehicle</h1> <br />
+            <div style={{ marginLeft: "100px" }}>
+                <h1 style={{ paddingTop: "30px" }}>Create new vehicle</h1> <br />
                 <Formik
                     initialValues={{
                         brand: '',
@@ -35,6 +35,9 @@ class VehicleInsert extends Component {
                         if (! /^\d+$/.test(values.number)) {
                             errors.number = 'Only digit can be used'
                         }
+                        if (values.productionYear < 1980 || values.productionYear > new Date().getFullYear()) {
+                            errors.productionYear = "Not correct production year"
+                        }
                         if (! /^\d+$/.test(values.productionYear)) {
                             errors.productionYear = 'Only digit can be used'
                         }
@@ -42,7 +45,7 @@ class VehicleInsert extends Component {
                     }}
                     onSubmit={(values) => {
                         api.insertVehicle(values)
-                        //post
+                        window.alert('Vehicle created successfully')
                     }}
                     render={({
                         values,
@@ -95,7 +98,6 @@ class VehicleInsert extends Component {
                                         name='productionYear'
                                         type='number'
                                         min="1980"
-                                        max="2020"
                                         step="1"
                                         onChange={handleChange}
                                         value={values.productionYear}
