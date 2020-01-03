@@ -52,7 +52,7 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', bodyParser.json(), async (req, res, next) => {
+router.put('/:id', bodyParser.json(), async (req, res) => {
     try {
         const vehicle = await Vehicle.findByIdAndUpdate(req.params.id,
             {
@@ -70,6 +70,5 @@ router.put('/:id', bodyParser.json(), async (req, res, next) => {
         return res.status(404).send('The vehicle was not found 😲 Not correct ID');
     }
 })
-
 
 module.exports = router;
