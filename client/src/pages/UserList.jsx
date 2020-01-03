@@ -4,7 +4,7 @@ import api from '../api'
 import styled from 'styled-components'
 import 'react-table/react-table.css'
 import { Button } from 'react-bootstrap'
-
+const moment = require('moment')
 
 const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
@@ -27,16 +27,15 @@ const Add = styled.div`
     margin-top: 10px;
 `
 
-class DeleteVehicle extends Component {
+class DeleteUser extends Component {
     deleteUser = event => {
         event.preventDefault()
-
         if (
             window.confirm(
-                `Do you want to detele the vehicle permanently?`
+                `Do you want to detele the user permanently?`
             )
         ) {
-            api.deleteVehicleById(this.props.id)
+            api.deleteUserById(this.props.id)
             window.location.reload()
         }
     }
@@ -46,10 +45,10 @@ class DeleteVehicle extends Component {
     }
 }
 
-class UpdateVehicle extends Component {
+class UpdateUser extends Component {
     updateUser = event => {
         event.preventDefault()
-        window.location.href = `/vehicles/update/${this.props.id}`
+        window.location.href = `/users/update/${this.props.id}`
     }
 
     render() {
@@ -57,11 +56,11 @@ class UpdateVehicle extends Component {
     }
 }
 
-class VehicleList extends Component {
+class UserList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            vehicles: [],
+            users: [],
             columns: [],
             isLoading: false,
         }
@@ -69,9 +68,9 @@ class VehicleList extends Component {
 
     componentDidMount = () => {
         this.setState({ isLoading: true })
-        api.getAllVehicles().then(vehicles => {
+        api.getAllUsers().then(users => {
             this.setState({
-                vehicles: vehicles.data,
+                users: users.data,
                 isLoading: false,
             })
         })
@@ -79,48 +78,30 @@ class VehicleList extends Component {
     }
 
     render() {
-        const { vehicles, isLoading } = this.state
+        const { users, isLoading } = this.state
 
         const columns = [
             {
-                Header: 'Brand',
-                accessor: 'brand',
+                Header: 'Name',
+                accessor: 'name',
             },
             {
-                Header: 'Type',
-                accessor: 'type',
+                Header: 'Email',
+                accessor: 'email',
             },
             {
-                Header: 'Plate',
-                accessor: 'plate',
+                Header: 'Phone',
+                accessor: 'phone',
             },
             {
-                Header: 'Fuel type',
-                accessor: 'fuelType',
+                Header: 'Created',
+                accessor: 'lastActiveAt',
+                Cell: props => moment(props.value).format("DD-MM-YYYY")
             },
             {
-                Header: 'Production year',
-                accessor: 'productionYear',
-            },
-            {
-                Header: 'Number',
-                accessor: 'number',
-            },
-            {
-                Header: 'Available',
-                accessor: 'isAvailable',
+                Header: 'Admin',
+                accessor: 'isAdmin',
                 Cell: (props) => props.value.toString()
-            },
-            {
-                Header: 'Update',
-                accessor: '',
-                Cell: function (props) {
-                    return (
-                        <span>
-                            <UpdateVehicle id={props.original._id} />
-                        </span>
-                    )
-                }
             },
             {
                 Header: 'Delete',
@@ -128,7 +109,18 @@ class VehicleList extends Component {
                 Cell: function (props) {
                     return (
                         <span>
-                            <DeleteVehicle id={props.original._id} />
+                            <DeleteUser id={props.original._id} />
+                        </span>
+                    )
+                }
+            },
+            {
+                Header: 'Update',
+                accessor: '',
+                Cell: function (props) {
+                    return (
+                        <span>
+                            <UpdateUser id={props.original._id} />
                         </span>
                     )
                 }
@@ -136,16 +128,16 @@ class VehicleList extends Component {
         ]
 
         let showTable = true
-        if (!vehicles.length) {
+        if (!users.length) {
             showTable = false
         }
 
         return (
             <Wrapper>
-                <h1 style={{paddingTop: "30px"}}>Vehicles</h1>
+                <h1 style={{paddingTop: "30px"}}>Users</h1>
                 {showTable && (
                     <ReactTable
-                        data={vehicles}
+                        data={users}
                         columns={columns}
                         loading={isLoading}
                         defaultPageSize={10}
@@ -154,11 +146,11 @@ class VehicleList extends Component {
                     />
                 )}
                 <Add>
-                    <Button variant="primary" style={{fontSize: "30px"}} href={'/vehicles/create'}>+</Button>
+                    <Button variant="primary" style={{fontSize: "30px"}} href={'/users/create'}>+</Button>
                 </Add>
             </Wrapper>
         )
     }
 }
 
-export default VehicleList
+export default UserList

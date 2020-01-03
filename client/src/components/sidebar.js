@@ -8,7 +8,7 @@ export default props => {
         Routes history
       </a>
 
-      <a className="menu-item" href="/">
+      <a className="menu-item" href="/users/list">
         User Management
       </a>
 

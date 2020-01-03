@@ -13,8 +13,17 @@ router.get('/me', auth, async (req, res) => {
     res.send(user);
 });
 
-router.post('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
+    const user = await User.findById(req.params.id).select('-password');
+    res.send(user);
+})
 
+router.get('/', async (req, res) => {
+    const users = await User.find().sort('name');
+    res.send(users.map(user => _.pick(user, ['_id', 'name', 'email', 'phone', 'isAdmin', 'lastActiveAt'])));
+})
+
+router.post('/', async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('User already registered.');
 
@@ -26,6 +35,36 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
     res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
+});
+
+router.put('/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id,
+            {
+                name: req.body.name,
+                phone: req.body.phone,
+                isAdmin: req.body.isAdmin
+            }, { new: true });
+        if (!user) return res.status(404).send('The user was not foound');
+        res.send(user);
+    } catch (err) {
+        return res.status(404).send('The user was not found');
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndRemove(req.params.id);
+        if (!user) return res.status(404).send('The user was not found');
+        res.send(user);
+    } catch (err) {
+        return res.status(404).send('The user was not found');
+    }
+});
+
+router.get('/emails', async (req, res) => {
+    const emails = await User.find().select('email');
+    res.send(emails);
 });
 
 module.exports = router; 
