@@ -15,10 +15,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const vehicleRoute = await VehicleRoute.findById(req.params.id);
-        if (!vehicleRoute) return res.status(404).send('The vehicle was not found 😲');
+        if (!vehicleRoute) return res.status(404).send('The vehicle Route was not found 😲');
         res.send(vehicleRoute);
     } catch (err) {
-        return res.status(404).send('The vehicle was not found 😲 Not correct ID');
+        return res.status(404).send('The vehicle Route was not found 😲 Not correct ID');
     }
 });
 
@@ -42,14 +42,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-// router.delete('/:id', [auth, admin], async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const vehicleRoute = await VehicleRoute.findByIdAndRemove(req.params.id);
-        if (!vehicleRoute) return res.status(404).send('The vehicle was not found 😲 \n I cannot delete it 😒');
+        if (!vehicleRoute) return res.status(404).send('The vehicle route was not found 😲 \n I cannot delete it 😒');
         res.send(vehicleRoute);
     } catch (err) {
-        return res.status(404).send('The vehicle was not found 😲 \n I cannot delete it 😒 Not correct ID');
+        return res.status(404).send('The vehicle route was not found 😲 \n I cannot delete it 😒 Not correct ID');
     }
 });
 
@@ -59,6 +58,7 @@ router.put('/:id', bodyParser.json(), async (req, res) => {
             {
                 vehicle: req.body.vehicle,
                 driver: req.body.driver,
+                date: req.body.date,
                 starting: req.body.starting,
                 destination: req.body.destination,
                 km: req.body.km,
