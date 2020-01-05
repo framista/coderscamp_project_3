@@ -16,7 +16,7 @@ To clone and run this application, you'll need Git and Node.js (which comes with
 $ git clone https://github.com/akteamcoderscamp/coderscamp_project_3
 
 # Go into the repository
-$ cd coderscamp_project_2
+$ cd coderscamp_project_3
 
 # Set environment variable: 
 # windows: 
@@ -41,3 +41,7 @@ $ npm start
 ```
 
 Go to http://localhost:3000
+
+If you want to connect to DB via Mongodb Compass:
+mongodb+srv://dbUser:dbUserPassword@cluster0-b6aon.mongodb.net/test
+
