@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
     const vehicleRoute = new VehicleRoute({
         vehicle: req.body.vehicle,
         driver: req.body.driver,
+        date: req.body.date,
         starting: req.body.starting,
         destination: req.body.destination,
         km: req.body.km,
