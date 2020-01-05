@@ -1,5 +1,4 @@
 const config = require('config');
-// const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 const vehicleRouteSchema = new mongoose.Schema({
@@ -16,3 +15,5 @@ const vehicleRouteSchema = new mongoose.Schema({
 
 
 const VehicleRoute = mongoose.model('vehicleRoute', vehicleRouteSchema);
+
+exports.VehicleRoute = VehicleRoute;
