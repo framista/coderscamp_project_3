@@ -3,6 +3,8 @@ import api from '../api'
 import { Formik } from 'formik'
 import { Form, Button } from 'react-bootstrap'
 const emailValidator = require('email-validator')
+const _ = require('lodash');
+
 
 class UserInsert extends Component {
 
@@ -14,9 +16,9 @@ class UserInsert extends Component {
     }
 
     componentDidMount = () => {
-        api.getUserEmails().then(emails => {
+        api.getAllUsers().then(users => {
             this.setState({
-                emails: emails.data,
+                emails: users.data.map( user => _.pick(user, ['email'])),
                 fetched: true,
             })
         })

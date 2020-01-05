@@ -62,9 +62,4 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.get('/emails', async (req, res) => {
-    const emails = await User.find().select('email');
-    res.send(emails);
-});
-
 module.exports = router; 

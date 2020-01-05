@@ -104,23 +104,23 @@ class UserList extends Component {
                 Cell: (props) => props.value.toString()
             },
             {
-                Header: 'Delete',
-                accessor: '',
-                Cell: function (props) {
-                    return (
-                        <span>
-                            <DeleteUser id={props.original._id} />
-                        </span>
-                    )
-                }
-            },
-            {
                 Header: 'Update',
                 accessor: '',
                 Cell: function (props) {
                     return (
                         <span>
                             <UpdateUser id={props.original._id} />
+                        </span>
+                    )
+                }
+            },
+            {
+                Header: 'Delete',
+                accessor: '',
+                Cell: function (props) {
+                    return (
+                        <span>
+                            <DeleteUser id={props.original._id} />
                         </span>
                     )
                 }
