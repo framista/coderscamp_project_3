@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const auth = require('./routes/auth');
 const vehicles = require('./routes/vehicles');
 const users = require('./routes/users');
-// const vehicleRoutes = require('./routes/vehicleRoutes');
+const vehicleRoutes = require('./routes/vehicleRoutes');
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(cors())
 app.use('/api/vehicles', vehicles);
-// app.use('/api/vehicleRoutes', vehicleRoutes);
+app.use('/api/vehicleRoutes', vehicleRoutes);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
