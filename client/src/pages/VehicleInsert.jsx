@@ -60,7 +60,7 @@ class VehicleInsert extends Component {
                         }}
                         onSubmit={(values) => {
                             api.insertVehicle(values)
-                            window.alert('Vehicle created successfully')
+                            window.location.assign("/vehicles/list")
                         }}
                         render={({
                             values,

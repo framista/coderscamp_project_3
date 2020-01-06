@@ -74,7 +74,7 @@ class UserInsert extends Component {
                         }}
                         onSubmit={(values) => {
                             api.insertUser(values)
-                            window.alert('User created successfully')
+                            window.location.assign("/users/list")
                         }}
                         render={({
                             values,

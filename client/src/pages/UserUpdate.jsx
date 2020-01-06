@@ -50,7 +50,7 @@ class UserUpdate extends Component {
                     }}
                     onSubmit={(values) => {
                         api.updateUserById(this.state.id, values)
-                        window.alert('User updated successfully')
+                        window.location.assign("/users/list")
                     }}
                     render={({
                         values,

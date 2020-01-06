@@ -52,7 +52,7 @@ class VehicleUpdate extends Component {
                         }}
                         onSubmit={(values) => {
                             api.updateVehicleById(this.state.id, values)
-                            window.alert('Vehicle updated successfully')
+                            window.location.assign("/vehicles/list")
                         }}
                         render={({
                             values,
