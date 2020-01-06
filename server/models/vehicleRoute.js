@@ -2,8 +2,8 @@ const config = require('config');
 const mongoose = require('mongoose');
 
 const vehicleRouteSchema = new mongoose.Schema({
-    vehicle: {type: String, required: true },
-    driver: {type: String, required: true },
+    vehicle: {type: String, required: true }, //vehicle plates
+    driver: {type: String, required: true }, //driver e-mail
     date:{type:Date, required:true},
     starting: {type: String, required: true },
     destination: {type: String, required: true },

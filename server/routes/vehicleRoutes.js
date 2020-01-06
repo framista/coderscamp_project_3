@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/', async (req, res) => {
-    const vehicleRoutes = await VehicleRoute.find().sort('type');
+    const vehicleRoutes = await VehicleRoute.find().sort('driver');
     res.send(vehicleRoutes);
 });
 
