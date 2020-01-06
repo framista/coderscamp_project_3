@@ -33,7 +33,7 @@ class DeleteVehicleRoute extends Component {
 
         if (
             window.confirm(
-                `Do you want to detele the vehicle permanently?`
+                `Do you want to detele the vehicle route permanently?`
             )
         ) {
             api.deleteVehicleRouteById(this.props.id)
