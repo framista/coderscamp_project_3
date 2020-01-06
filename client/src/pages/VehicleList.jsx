@@ -103,10 +103,6 @@ class VehicleList extends Component {
                 accessor: 'productionYear',
             },
             {
-                Header: 'Number',
-                accessor: 'number',
-            },
-            {
                 Header: 'Available',
                 accessor: 'isAvailable',
                 Cell: (props) => props.value.toString()

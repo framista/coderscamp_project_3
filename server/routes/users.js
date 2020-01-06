@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const users = await User.find().sort('name');
-    res.send(users.map(user => _.pick(user, ['_id', 'name', 'email', 'phone', 'isAdmin', 'lastActiveAt'])));
+    res.send(users.map(user => _.pick(user, ['_id', 'name', 'email', 'phone', 'isAdmin'])));
 })
 
 router.post('/', async (req, res) => {

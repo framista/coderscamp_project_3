@@ -25,7 +25,6 @@ router.get('/:id', async (req, res) => {
 // router.post('/', auth, async (req, res) => {
 router.post('/', async (req, res) => {
     const vehicle = new Vehicle({
-        number: req.body.number,
         type: req.body.type,
         brand: req.body.brand,
         plate: req.body.plate,
@@ -56,7 +55,6 @@ router.put('/:id', bodyParser.json(), async (req, res) => {
     try {
         const vehicle = await Vehicle.findByIdAndUpdate(req.params.id,
             {
-                number: req.body.number,
                 type: req.body.type,
                 brand: req.body.brand,
                 plate: req.body.plate,

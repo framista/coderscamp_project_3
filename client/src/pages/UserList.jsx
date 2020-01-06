@@ -4,7 +4,6 @@ import api from '../api'
 import styled from 'styled-components'
 import 'react-table/react-table.css'
 import { Button } from 'react-bootstrap'
-const moment = require('moment')
 
 const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
@@ -92,11 +91,6 @@ class UserList extends Component {
             {
                 Header: 'Phone',
                 accessor: 'phone',
-            },
-            {
-                Header: 'Created',
-                accessor: 'lastActiveAt',
-                Cell: props => moment(props.value).format("DD-MM-YYYY")
             },
             {
                 Header: 'Admin',
