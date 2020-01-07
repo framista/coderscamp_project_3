@@ -1,10 +1,8 @@
 const auth = require('../middleware/auth');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const admin = require('../middleware/admin')
 const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 const { User } = require('../models/user');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
@@ -23,7 +21,7 @@ router.get('/', async (req, res) => {
     res.send(users.map(user => _.pick(user, ['_id', 'name', 'email', 'phone', 'isAdmin'])));
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('User already registered.');
 
@@ -37,7 +35,7 @@ router.post('/', async (req, res) => {
     res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id,
             {
@@ -52,7 +50,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     try {
         const user = await User.findByIdAndRemove(req.params.id);
         if (!user) return res.status(404).send('The user was not found');
