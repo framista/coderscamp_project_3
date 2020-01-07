@@ -27,41 +27,41 @@ const Add = styled.div`
     margin-top: 10px;
 `
 
-class DeleteVehicle extends Component {
-    deleteUser = event => {
+class DeleteVehicleRoute extends Component {
+    deleteVehicleRoute = event => {
         event.preventDefault()
 
         if (
             window.confirm(
-                `Do you want to detele the vehicle permanently?`
+                `Do you want to detele the vehicle route permanently?`
             )
         ) {
-            api.deleteVehicleById(this.props.id)
+            api.deleteVehicleRouteById(this.props.id)
             window.location.reload()
         }
     }
 
     render() {
-        return <Delete onClick={this.deleteUser}>Delete</Delete>
+        return <Delete onClick={this.deleteVehicleRoute}>Delete</Delete>
     }
 }
 
-class UpdateVehicle extends Component {
-    updateUser = event => {
+class UpdateVehicleRoute extends Component {
+    updateVehicleRoute = event => {
         event.preventDefault()
-        window.location.href = `/vehicles/update/${this.props.id}`
+        window.location.href = `/vehicleRoutes/update/${this.props.id}`
     }
 
     render() {
-        return <Update onClick={this.updateUser}>Update</Update>
+        return <Update onClick={this.updateVehicleRoute}>Update</Update>
     }
 }
 
-class VehicleList extends Component {
+class VehicleRouteList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            vehicles: [],
+            vehicleRoutes: [],
             columns: [],
             isLoading: false,
         }
@@ -69,9 +69,9 @@ class VehicleList extends Component {
 
     componentDidMount = () => {
         this.setState({ isLoading: true })
-        api.getAllVehicles().then(vehicles => {
+        api.getAllVehicleRoutes().then(vehicleRoutes => {
             this.setState({
-                vehicles: vehicles.data,
+                vehicleRoutes: vehicleRoutes.data,
                 isLoading: false,
             })
         })
@@ -79,32 +79,24 @@ class VehicleList extends Component {
     }
 
     render() {
-        const { vehicles, isLoading } = this.state
+        const { vehicleRoutes, isLoading } = this.state
 
         const columns = [
             {
-                Header: 'Brand',
-                accessor: 'brand',
+                Header: 'Vehicle',
+                accessor: 'vehicle',
             },
             {
-                Header: 'Type',
-                accessor: 'type',
+                Header: 'Driver',
+                accessor: 'driver',
             },
             {
-                Header: 'Plate',
-                accessor: 'plate',
+                Header: 'Route',
+                accessor: 'starting',
             },
             {
-                Header: 'Fuel type',
-                accessor: 'fuelType',
-            },
-            {
-                Header: 'Production year',
-                accessor: 'productionYear',
-            },
-            {
-                Header: 'Available',
-                accessor: 'isAvailable',
+                Header: 'Status',
+                accessor: 'isFinished',
                 Cell: (props) => props.value.toString()
             },
             {
@@ -113,7 +105,7 @@ class VehicleList extends Component {
                 Cell: function (props) {
                     return (
                         <span>
-                            <UpdateVehicle id={props.original._id} />
+                            <UpdateVehicleRoute id={props.original._id} />
                         </span>
                     )
                 }
@@ -124,7 +116,7 @@ class VehicleList extends Component {
                 Cell: function (props) {
                     return (
                         <span>
-                            <DeleteVehicle id={props.original._id} />
+                            <DeleteVehicleRoute id={props.original._id} />
                         </span>
                     )
                 }
@@ -132,16 +124,16 @@ class VehicleList extends Component {
         ]
 
         let showTable = true
-        if (!vehicles.length) {
+        if (!vehicleRoutes.length) {
             showTable = false
         }
 
         return (
             <Wrapper>
-                <h1 style={{paddingTop: "30px"}}>Vehicles</h1>
+                <h1 style={{paddingTop: "30px"}}>Vehicle Routes</h1>
                 {showTable && (
                     <ReactTable
-                        data={vehicles}
+                        data={vehicleRoutes}
                         columns={columns}
                         loading={isLoading}
                         defaultPageSize={10}
@@ -150,11 +142,11 @@ class VehicleList extends Component {
                     />
                 )}
                 <Add>
-                    <Button variant="primary" style={{fontSize: "30px"}} href={'/vehicles/create'}>+</Button>
+                    <Button variant="primary" style={{fontSize: "30px"}} href={'/vehicleRoutes/create'}>+</Button>
                 </Add>
             </Wrapper>
         )
     }
 }
 
-export default VehicleList
+export default VehicleRouteList

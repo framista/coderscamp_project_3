@@ -3,9 +3,6 @@ const auth = require('../middleware/auth')
 const { Vehicle } = require('../models/vehicle')
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser')
-
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/', async (req, res) => {
     const vehicles = await Vehicle.find().sort('type');
@@ -22,10 +19,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// router.post('/', auth, async (req, res) => {
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const vehicle = new Vehicle({
-        number: req.body.number,
         type: req.body.type,
         brand: req.body.brand,
         plate: req.body.plate,
@@ -41,8 +36,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// router.delete('/:id', [auth, admin], async (req, res) => {
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     try {
         const vehicle = await Vehicle.findByIdAndRemove(req.params.id);
         if (!vehicle) return res.status(404).send('The vehicle was not found 😲 \n I cannot delete it 😒');
@@ -52,11 +46,10 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', bodyParser.json(), async (req, res, next) => {
+router.put('/:id', [auth], async (req, res) => {
     try {
         const vehicle = await Vehicle.findByIdAndUpdate(req.params.id,
             {
-                number: req.body.number,
                 type: req.body.type,
                 brand: req.body.brand,
                 plate: req.body.plate,
@@ -70,6 +63,5 @@ router.put('/:id', bodyParser.json(), async (req, res, next) => {
         return res.status(404).send('The vehicle was not found 😲 Not correct ID');
     }
 })
-
 
 module.exports = router;

@@ -42,9 +42,6 @@ class VehicleUpdate extends Component {
                             if (!values.plate) {
                                 errors.plate = 'Required'
                             }
-                            if (! /^\d+$/.test(values.number)) {
-                                errors.number = 'Only digit can be used'
-                            }
                             if(values.productionYear < 1980 || values.productionYear > new Date().getFullYear()){
                                 errors.productionYear = "Not correct production year"
                             }
@@ -55,7 +52,7 @@ class VehicleUpdate extends Component {
                         }}
                         onSubmit={(values) => {
                             api.updateVehicleById(this.state.id, values)
-                            window.alert('Vehicle updated successfully')
+                            window.location.assign("/vehicles/list")
                         }}
                         render={({
                             values,
@@ -96,6 +93,7 @@ class VehicleUpdate extends Component {
                                             onChange={handleChange}
                                             value={values.plate}
                                             isInvalid={!!errors.plate}
+                                            disabled="disabled"
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             {errors.plate}
@@ -124,22 +122,6 @@ class VehicleUpdate extends Component {
                                             <option value="Gasoline">Gasoline</option>
                                             <option value="Diesel">Diesel</option>
                                         </Form.Control>
-                                    </Form.Group>
-
-                                    <Form.Group >
-                                        <Form.Label>Number</Form.Label>
-                                        <Form.Control
-                                            name='number'
-                                            type='number'
-                                            min="0"
-                                            step="1"
-                                            onChange={handleChange}
-                                            value={values.number}
-                                            isInvalid={!!errors.number}
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            {errors.number}
-                                        </Form.Control.Feedback>
                                     </Form.Group>
 
                                     <Form.Check

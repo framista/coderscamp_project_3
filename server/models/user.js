@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true },
     phone: Number,
     isAdmin: {type: Boolean, default: false },
-    lastActiveAt: {type: Date, default: Date.now}
 });
 
 userSchema.methods.generateAuthToken = function() { 

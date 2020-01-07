@@ -2,7 +2,6 @@ const config = require('config');
 const mongoose = require('mongoose');
 
 const vehicleSchema = new mongoose.Schema({
-    number: { type: Number, required: true },    // some serial number
     type: {
         type: String, required: true,
         enum: ['Micro', 'Sedan', 'CUV', 'SUV', 'Coupe', 'Hatchback', 'Pickup',
@@ -13,7 +12,6 @@ const vehicleSchema = new mongoose.Schema({
     productionYear: { type: Number, required: true },
     isAvailable: { type: Boolean, default: true },
     fuelType: { type: String, required: true, enum: ['Gasoline', 'Diesel'] },
-    vehicleRoutes: String
 });
 
 const Vehicle = mongoose.model('Vehicle', vehicleSchema);
