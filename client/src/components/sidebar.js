@@ -24,6 +24,10 @@ export default props => {
         User Panel
       </a>
 
+      <a className="menu-item" href="/Login">
+        Log out
+      </a>
+
     </Menu>
   );
 };

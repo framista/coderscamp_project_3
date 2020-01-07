@@ -6,7 +6,8 @@ import {getAllUsers, deleteUserById, insertUser, updateUserById, getUserById, ge
 export const api = axios.create({
     baseURL: 'http://localhost:5000/api',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('key-jwt')
     },
 })
 
